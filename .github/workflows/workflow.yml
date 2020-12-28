@@ -14,18 +14,9 @@ jobs:
           - 14.x
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: inyono/setup-yarn@main
         with:
           node-version: ${{ matrix.node-version }}
-      - id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - run: yarn
       - run: yarn build
   lint:
     runs-on: ubuntu-latest
@@ -36,18 +27,9 @@ jobs:
           - 14.x
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: inyono/setup-yarn@main
         with:
           node-version: ${{ matrix.node-version }}
-      - id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - run: yarn
       - run: yarn lint
   test:
     runs-on: ubuntu-latest
@@ -58,16 +40,8 @@ jobs:
           - 14.x
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: inyono/setup-yarn@main
         with:
           node-version: ${{ matrix.node-version }}
-      - id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - run: yarn
       - run: yarn test
